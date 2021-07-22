@@ -6,25 +6,37 @@ import About from './AboutComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import DishDetail from './DishdetailComponent'
-import {Switch,Route,Redirect,withRouter} from 'react-router-dom';
-import { connect } from 'react-redux';
-import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import {Switch,Route,Redirect,withRouter} from 'react-router-dom'; // s
+import { connect } from 'react-redux'; //importante para conectar mis omponentes principales
+import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';//agregamos las acciones de redux
 import { actions } from 'react-redux-form';
 
 
+//mi componente principal ahora obtendra el estado de mi redux store
+//si hacemos uso de router tenemos uqe importear withRouter para hacer uso de  Redux
+// anteriormente este mantenia el estado de mi aplicacion
+//ahora este componente principal necesita ir y obtener ese estado de Redux Store
+//para conenctar el componente a la tienda redux bajamos al export
 
+//obtiene el estado como parametro aqui
+//mapea el estado de la tienda Redux ( dishes,commentes ets) en props que estaran disponible  en mi componente
 const mapStateToProps = state => {
   return {
-    dishes: state.dishes,
+    dishes: state.dishes,    // estos props se derivan de mis reductores
     comments: state.comments,
     promotions: state.promotions,
     leaders: state.leaders
   }
 }
+
+// esto recibira el envio(dispatch) como uno de los parametros aqui Lo que recibe de nuestras store (comments,dshes..)
+
 const mapDispatchToProps = dispatch => ({
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+  //definimos una propidad que recibe los parametros que enviara una accion (dispatch)
+  //
+  postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
   fetchDishes: () => { dispatch(fetchDishes())},
-  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}, //el formulario que tenemos se llama feedback , actions añade las acciones necesarias para reestablecer mi formulario
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos())
 });
@@ -62,7 +74,7 @@ class Main extends Component {
           errMess={this.props.dishes.errMess}
           comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
           commentsErrMess={this.props.comments.errMess}
-         addComment={this.props.addComment}
+         postComment={this.props.postComment}
       />
       );
     };
@@ -86,5 +98,9 @@ class Main extends Component {
   
   }
 }
+//como nonectar mi componente al enrutador react (react-Router)
 
+// envolvmeos este main que definimos dentro de un conect
+//conect toma map SateToprops omo un parametro
+//omo usamos react router necesitamos meterlo dentro de whith roter
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

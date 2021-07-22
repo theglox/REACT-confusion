@@ -80,7 +80,7 @@ class Contact extends Component {
                                     <Errors
                                         className="text-danger"
                                         model=".firstname"
-                                        show="touched"
+                                        show="touched" //mostrara ete mensaje despues de ser tocado
                                         messages={{
                                             required: 'Required',
                                             minLength: 'Must be greater than 2 characters',

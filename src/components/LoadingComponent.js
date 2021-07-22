@@ -1,3 +1,4 @@
+// para  hacer uso de este componente lo implementamos en el main
 import React from 'react';
 
 export const Loading = () => {
