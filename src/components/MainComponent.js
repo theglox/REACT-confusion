@@ -10,6 +10,7 @@ import {Switch,Route,Redirect,withRouter} from 'react-router-dom'; // s
 import { connect } from 'react-redux'; //importante para conectar mis omponentes principales
 import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';//agregamos las acciones de redux
 import { actions } from 'react-redux-form';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 //mi componente principal ahora obtendra el estado de mi redux store
@@ -82,6 +83,9 @@ class Main extends Component {
     return (
       <div>
         <Header/>
+        <TransitionGroup>
+        <CSSTransition key = {this.props.location.key} classNames="page" timeout={300}>
+
         <Switch>
               <Route path='/home' component={HomePage} />
               <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
@@ -91,6 +95,8 @@ class Main extends Component {
               
               <Redirect to="/home" />
           </Switch>
+            </CSSTransition>
+          </TransitionGroup>
         <Footer/>
       </div>
      
