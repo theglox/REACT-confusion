@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Breadcrumb, BreadcrumbItem,Button,Label,Col, Row} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { Control, Form, Errors, actions } from 'react-redux-form';
+import { postFeedback } from '../redux/ActionCreators';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -15,9 +16,12 @@ class Contact extends Component {
     }
 
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        debugger
+
+        this.props.postFeedback(values);
         this.props.resetFeedbackForm();
+        console.log('Current State is: ' + JSON.stringify(values));
+        console.log(values);
         // event.preventDefault();
     }
 

@@ -7,6 +7,7 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
+
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -28,7 +29,7 @@ class CommentForm extends Component {
     }
     handleSubmit(values) {
        this.toggleModal();
-       
+       debugger
        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
       
     }
@@ -149,6 +150,9 @@ class CommentForm extends Component {
                         </Fade>
                     );
                 })}
+         
+               
+
                 </Stagger>
                 </ul>
                 
